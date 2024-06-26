@@ -1,0 +1,26 @@
+class Solution {
+    public int solution(int[] array) {
+        int temp;
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] > array[j]) {
+                    // 두 요소를 교환합니다.
+                    temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+        int median;
+        int n = array.length;
+        if (n % 2 == 1) {
+            // 배열의 길이가 홀수인 경우
+            median = array[n / 2];
+        } else {
+            // 배열의 길이가 짝수인 경우
+            median = (array[(n / 2) - 1] + array[n / 2]) / 2;
+        }
+
+        return median;
+    }
+}
