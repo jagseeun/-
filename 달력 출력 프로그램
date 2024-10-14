@@ -1,0 +1,25 @@
+public class Calendar2024 {
+    public static void main(String[] args) {
+        String[] months = {"1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"}; //월 저장 배열
+        int[] days = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //월의 총일 배열
+        int[] startDay = {1, 4, 5, 1, 3, 6, 1, 4, 0, 2, 5, 0}; // 각 월의 시작 요일 (0: 일요일, 1: 월요일, 2: 화요일, 3: 수요일, 4: 목요일, 5: 금요일, 6: 토요일)
+
+        for (int month = 0; month < 12; month++) {
+            System.out.println("\n" + months[month] + " 2024"); //월, 년
+            System.out.println("일 월 화 수 목 금 토");
+
+            // 시작 요일까지 공백 출력
+            for (int i = 0; i < startDay[month]; i++) { //0으로 시작하여, 해당 월의 첫 날이 시작되는 요일까지 반복
+                System.out.print("   "); //공백.
+            }
+
+            // 날짜 출력
+            for (int day = 1; day <= days[month]; day++) { //1부터 시작하여, 해당 월의 총 일수까지 반복
+                System.out.printf("%2d ", day); //정수 1자리 수는 앞에 공백, 2자리수 표시 
+                if ((day + startDay[month]) % 7 == 0 || day == days[month]) { //현재 날짜를 시작 요일과 더한 값이 7로 나누어떨어지는 경우(주의 마지막 날일때), 월의 마지막 날일 때
+                    System.out.println(); //줄바꿈
+                }
+            }
+        }
+    }
+}
