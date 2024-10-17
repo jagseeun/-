@@ -1,0 +1,142 @@
+package test_and_Calender;
+import java.util.Scanner;
+public class TC {
+	static String[][] Schedules = new String[12][31];
+	static Scanner sc= new Scanner(System.in);
+	static int[] months= {1,2,3,4,5,6,7,8,9,10,11,12};
+	static int[] StartDay= {3,6,5,1,3,6,1,4,0,2,5,0};
+	public static void main(String[] args) {
+		personalityTest();
+		menu();
+	}
+    static void personalityTest() {
+    	int P = 0;
+    	int J = 0;
+    	String result = "";
+
+    	System.out.println("# 위 문제들은 당신의 성향을 테스트 하기 위한 문제들 입니다.(총 문항: 7문항)");
+    	System.out.println("# 질문에 대한 답변은 *예 혹은 아니오*로만 가능합니다.");
+    	System.out.println();
+
+    	String[] questions = {
+    			"1. 갑작스러운 변화에 잘 적응하나요?",
+    			"2. 정해진 규칙과 규범을 따르는 것을 좋아하나요?",
+    			"3. 일정, 목록 같은 체계화 도구 사용을 좋아하나요?",
+    			"4. 정리정돈이 잘 된 환경에서 더 잘 집중할 수 있나요?",
+    			"5. 어떤 일이든 마무리 짓고 넘어가는 것이 중요한가요?",
+    			"6. 마감 시간에 맞춰 일을 완료하는 것이 중요한가요?",
+    			"7. 중요한 결정을 내리기 전에 모든 가능성을 고려한 후에 결정을 내리나요?"
+    	};
+
+    	for (int i = 0; i < questions.length; i++) {
+    		String answer = getAnswer(sc, questions[i]);
+
+    		switch (i) {
+    			case 0: case 1:
+    				if (answer.equals("예")) P++; else J++;
+                break;
+    			case 2: case 3: case 4: case 5: case 6: // 7번 문제
+    				if (answer.equals("예")) J++; else P++;
+    				break;
+    		}
+    		System.out.println();
+    	}
+
+    	System.out.println("# 검사 결과");
+    	System.out.println("P: " + P + ", J: " + J);
+    	if (P < J) {
+    		result = "J";
+    	} 
+    	else {
+    		result = "P";
+    	}
+    System.out.println("당신의 성격은 " + result + "입니다.");
+}
+
+    private static String getAnswer(Scanner sc, String question) {
+    	String answer;
+    	do {
+    		System.out.print(question + " : ");
+    		answer = sc.nextLine().trim();
+    		if (!answer.equals("예") && !answer.equals("아니오")) {
+    			System.out.println("예 혹은 아니오로 대답해 주세요.");
+    			System.out.println();
+    		}
+    	} while (!answer.equals("예") && !answer.equals("아니오"));
+    	return answer;
+	}
+static void menu() {
+	
+	while(true) {
+		System.out.println("\n# 목표 설정하기");
+		System.out.println("1. 일정 설정\n2. 일정 확인\n3. 종료\n");
+		System.out.print("번호를 입력하세요 : ");
+		int choice = sc.nextInt();
+		if(choice==1)setSchedule();
+		else if(choice==2)viewSchedules();
+		else if(choice==3) {System.out.println("# 목표 설정을 종료합니다."); return;}
+		else System.out.println("잘못된 선택 입니다. 1~3번 중 고르세요.");
+		
+	}
+}
+static void setSchedule() {
+	System.out.print("월을 입력하세요(1~12) : ");
+	int month=sc.nextInt()-1;
+	if(month<0||month>11) {
+		System.out.println("잘못된 월 입니다.");
+		return;
+	}
+	if(month>=2) {
+		System.out.println("2024년 "+months[month]+"월 달력");
+		printCalendar(month);
+	}
+	else if(month<2) {
+		System.out.println("2025년 "+months[month]+"월 달력");
+		printCalendar(month);
+	}
+	System.out.print("날짜를 입력하세요 : ");
+	int day = sc.nextInt();
+	if(!possible(day,month)) {
+		System.out.println("# 잘못된 날짜 입니다.");
+		return;
+	}
+	sc.nextLine();
+	System.out.print("목표를 입력하세요 : ");
+	Schedules[month][day-1]=sc.nextLine();
+	System.out.println("일정이 저장되었습니다.");
+}
+static void viewSchedules() {
+	boolean has=false;
+	for(int month=0;month<12;month++) {
+		for(int day=0;day<EndDays(month);day++) {
+			if(Schedules[month][day]!=null) { //값이 없지 않으면 출력 하고 있는게 참
+				System.out.println(" - "+months[month]+"월 "+(day+1)+"일 : "+Schedules[month][day]);
+				has=true;
+			}
+		}
+	}
+	if(!has) { //있는게 거짓이면 일정 없다고 출력 됨.
+		System.out.println("# 현재 일정이 없습니다.");
+	}
+}
+static boolean possible(int day, int month) {
+	return (day>=1&&day<=EndDays(month)); //가능한 수
+}
+static int EndDays(int month) {
+	int[] EndDay= {31, 28, 31, 30, 31,30, 31, 31,30, 31,30,31};
+	return EndDay[month];
+}
+static void printCalendar(int month) {
+	System.out.println("일\t월\t화\t수\t목\t금\t토");
+	for(int i=0;i<StartDay[month];i++)	{
+		System.out.print("\t");  //시작까지 공백
+	}
+	for(int day=1;day<=EndDays(month);day++) {
+		System.out.print(day+"\t");
+		if((day+StartDay[month])%7==0) { // 일요일이 될때 줄바꿈 됨
+			System.out.println();
+		}
+	}
+	System.out.println();
+	}
+}
