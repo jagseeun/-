@@ -1,0 +1,65 @@
+<!--1414 장세은-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intro page</title>
+    <style>
+        @font-face {
+            font-family: 'UhBeeQUEENJ';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeQUEENJ.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body{
+            margin:0;
+        }
+        .glass {
+            width: 100vw;
+            height: 100vh;
+            background-image: url('images/my_honeybee.jpg');
+            /* 이미지 경로 */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pre {
+            width: 250px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 45%;
+            -webkit-backdrop-filter: brightness(1.1) blur(20px);
+            backdrop-filter: brightness(1.1) blur(20px);
+            mix-blend-mode: overlay;
+            background-color: hsla(40, 98%, 63%, 0.553);
+        }
+        .pre p{
+            font-family: UhBeeQUEENJ;
+            font-size: 2rem;
+            text-align: center;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass">
+        <div class="pre">
+            <p>
+                소중한 벌<br>
+                꽃에 가서<br>
+                꿀 만들어 오거라~
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
